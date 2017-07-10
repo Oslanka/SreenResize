@@ -17,7 +17,7 @@ public class GenerateValueFiles {
 
     private float baseDpi = 2.0f;
     private float dpi = 2.0f;
-    private final static String WTemplate = "<dimen name=\"dp_{0}\">{1}dp</dimen>\n";
+    private   String WTemplate = "<dimen name=\"dp_{0}\">{1}dp</dimen>\n";
 //	private final static String HTemplate = "<dimen name=\"y{0}\">{1}dp</dimen>\n";
 
     /**
@@ -25,7 +25,7 @@ public class GenerateValueFiles {
      */
     private static String VALUE_TEMPLATE = "values-xhdpi-{0}x{1}";
 
-    private static final String SUPPORT_DIMESION = "1080,1920;1536,2048;1200,1920;800,1280;";
+    private static final String SUPPORT_DIMESION = "1080,1920;1536,2048;1200,1920;800,1280;1200,1830;";
 
     private String supportStr = SUPPORT_DIMESION;
 
@@ -92,8 +92,10 @@ public class GenerateValueFiles {
                 dpi = 1.0f;
                 VALUE_TEMPLATE = "values-mdpi-{0}x{1}";
             } else if (i == 3) {
-                dpi = 3.0f;
+                dpi = 2.5f;
                 VALUE_TEMPLATE = "values-xxhdpi-{0}x{1}";
+            }else if (i == 4){
+
             }
             for (String val : vals) {
                 String[] wh = val.split(",");
@@ -114,7 +116,13 @@ public class GenerateValueFiles {
         float cellw = baseDpi / dpi * ((1.0f * h / baseH ) );
 
 //		System.out.println("width : " + w + "," + baseW + "," + cellw);
+        WTemplate = "<dimen name=\"dp_{0}\">{1}dp</dimen>\n";
         for (int i = 1; i < 500; i++) {
+            sbForWidth.append(WTemplate.replace("{0}", i + "").replace("{1}",
+                    change(cellw * i) + ""));
+        }
+        WTemplate = "<dimen name=\"size_{0}sp\">{1}sp</dimen>\n";
+        for (int i = 1; i < 40; i++) {
             sbForWidth.append(WTemplate.replace("{0}", i + "").replace("{1}",
                     change(cellw * i) + ""));
         }
